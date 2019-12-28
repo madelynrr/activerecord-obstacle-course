@@ -40,8 +40,8 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     expected_result = ['Abercrombie', 'Giorgio Armani', 'J.crew', 'Fox']
 
     # ----------------------- Using Ruby -------------------------
-    names = Order.last.items.all.map(&:name)
-    names.sort_by! { |x| x[/\d+/].to_i }
+    # names = Order.last.items.all.map(&:name)
+    # names.sort_by! { |x| x[/\d+/].to_i }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
@@ -57,20 +57,22 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     expected_result = ['Giorgio Armani', 'Banana Republic', 'Izod', 'Fox']
 
     # ----------------------- Using Ruby -------------------------
-    items_for_user_3_third_order = []
-    grouped_orders = []
-    Order.all.each do |order|
-      if order.items
-        grouped_orders << order if order.user_id == @user_3.id
-      end
-    end
-    grouped_orders.each_with_index do |order, idx|
-      items_for_user_3_third_order = order.items.map(&:name) if idx == 2
-    end
+    # items_for_user_3_third_order = []
+    # grouped_orders = []
+    # Order.all.each do |order|
+    #   if order.items
+    #     grouped_orders << order if order.user_id == @user_3.id
+    #   end
+    # end
+    # grouped_orders.each_with_index do |order, idx|
+    #   items_for_user_3_third_order = order.items.map(&:name) if idx == 2
+    # end
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    items_for_user_3_third_order = Order.where(user_id: @user_3.id).third.items.pluck(:name)
+
     # ------------------------------------------------------------
 
     # Expectation
